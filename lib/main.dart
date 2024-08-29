@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurnat',
-      theme: ThemeData.dark().copyWith(
-        useMaterial3: true,
-      ),
+      
       home: const Res()
     );
   }

@@ -44,12 +44,12 @@ class _LoginScreenState extends State<LoginScreen> {
         // Save token or perform any required action
         final token = responseData['token'];
         // Store the token securely in the app
-        // ...
 
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => const HomeScreen())); // Navigate to home screen
+                builder: (context) =>
+                    const HomeScreen())); // Navigate to home screen
       } else {
         setState(() {
           errorMessage = 'Invalid email or password';
@@ -66,51 +66,120 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  bool hidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      backgroundColor: Color.fromARGB(255, 239, 226, 84),
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            if (isLoading)
-              const CircularProgressIndicator()
-            else
-              ElevatedButton(
-                onPressed: () {
-                  final email = emailController.text;
-                  final password = passwordController.text;
-                  login(email, password);
-                },
-                child: const Text('Login'),
-              ),
-            if (errorMessage.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  errorMessage,
-                  style: const TextStyle(color: Colors.red),
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                  margin: EdgeInsets.symmetric(vertical: 85, horizontal: 20),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+
+                      //box Color
+                      color: Color.fromARGB(255, 234, 224, 224),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Theme.of(context).hintColor.withOpacity(0.2),
+                            offset: Offset(0, 10),
+                            blurRadius: 20)
+                      ]),
+                  child: Form(
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Text(
+                          "Login",
+                          style: Theme.of(context).textTheme.headlineLarge,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          // onSaved: ,
+                          validator: (input) => !input!.contains("@")
+                              ? "Email should be Valid"
+                              : null,
+                          decoration: const InputDecoration(
+                            hintText: "Email address",
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(128, 10, 10, 9)),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 8, 8, 7)),
+                            ),
+                            prefixIcon: Icon(Icons.email,
+                                color: Color.fromARGB(255, 228, 216, 48)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          controller: passwordController,
+                          keyboardType: TextInputType.text,
+                          // onSaved: ,
+                          obscureText: hidePassword,
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            enabledBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(128, 10, 10, 9)),
+                            ),
+                            focusedBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color.fromARGB(255, 8, 8, 7)),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.email,
+                              color: Color.fromARGB(255, 228, 216, 48),
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                              color: const Color.fromARGB(255, 29, 29, 27),
+                              icon: Icon(hidePassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            login(
+                                emailController.text, passwordController.text);
+                          },
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
+            )
           ],
         ),
       ),
