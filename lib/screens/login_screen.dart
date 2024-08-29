@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -13,10 +15,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
   String errorMessage = '';
+  bool hidePassword = true;
 
   Future<void> login(String email, String password) async {
     setState(() {
@@ -66,120 +70,153 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  bool hidePassword = true;
+  Future<void> registerScreen() {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+    ); //
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 239, 226, 84),
-      body: SingleChildScrollView(
+      backgroundColor: const Color.fromARGB(255, 255, 244, 255),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 150),
         child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                  margin: EdgeInsets.symmetric(vertical: 85, horizontal: 20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-
-                      //box Color
-                      color: Color.fromARGB(255, 234, 224, 224),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Theme.of(context).hintColor.withOpacity(0.2),
-                            offset: Offset(0, 10),
-                            blurRadius: 20)
-                      ]),
-                  child: Form(
-                    child: Column(
-                      children: <Widget>[
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          "Login",
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          // onSaved: ,
-                          validator: (input) => !input!.contains("@")
-                              ? "Email should be Valid"
-                              : null,
-                          decoration: const InputDecoration(
-                            hintText: "Email address",
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(128, 10, 10, 9)),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 8, 8, 7)),
-                            ),
-                            prefixIcon: Icon(Icons.email,
-                                color: Color.fromARGB(255, 228, 216, 48)),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextFormField(
-                          controller: passwordController,
-                          keyboardType: TextInputType.text,
-                          // onSaved: ,
-                          obscureText: hidePassword,
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            enabledBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(128, 10, 10, 9)),
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color.fromARGB(255, 8, 8, 7)),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.email,
-                              color: Color.fromARGB(255, 228, 216, 48),
-                            ),
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  hidePassword = !hidePassword;
-                                });
-                              },
-                              color: const Color.fromARGB(255, 29, 29, 27),
-                              icon: Icon(hidePassword
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            login(
-                                emailController.text, passwordController.text);
-                          },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              "Hello!",
+              style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 12, 11, 11)),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Text(
+              "WELCOME TO MSI RESTAURANT",
+              style: TextStyle(
+                fontSize: 25,
+                color: Color.fromARGB(219, 31, 30, 30),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    controller: emailController,
+                    style: const TextStyle(height: 2.4, color: Colors.black),
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      fillColor:const Color.fromARGB(255, 255, 255, 255),
+                      filled: true,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                          .hasMatch(value)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-              ],
-            )
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: passwordController,
+                    keyboardType: TextInputType.text,
+                    obscureText: hidePassword,
+                    style: const TextStyle(height: 2.4, color: Colors.black),
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      fillColor:const Color.fromARGB(255, 255, 255, 255),
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            hidePassword = !hidePassword;
+                          });
+                        },
+                        color: const Color.fromARGB(255, 29, 29, 27),
+                        icon: Icon(hidePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      } else if (value.length < 6) {
+                        return 'Password must be at least 6 characters long';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        login(emailController.text, passwordController.text);
+                      }
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                          const Color.fromARGB(255, 243, 104, 104)),
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                      overlayColor: WidgetStateProperty.resolveWith<Color?>(
+                        (Set<WidgetState> states) {
+                          if (states.contains(WidgetState.pressed)) {
+                            return const Color.fromARGB(255, 192, 87, 92);
+                          }
+                          return null; // Default color
+                        },
+                      ),
+                      padding: WidgetStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 23),
+                      ),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      elevation: WidgetStateProperty.all(5),
+                    ),
+                    child: const Text('Elevated Button'),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            TextButton(
+                onPressed: () {
+                  registerScreen();
+                },
+                child: const Text("Not a member? Register now")),
           ],
         ),
       ),
