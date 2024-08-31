@@ -15,7 +15,7 @@ class Api {
           .map((menuItem) => MenuItem.fromJson(menuItem))
           .toList();
     } else {
-      throw Exception('Error in menuitem!');
+      throw Exception('Something happended');
     }
   }
 
