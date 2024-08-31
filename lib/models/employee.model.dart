@@ -1,14 +1,15 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 class Employee {
   final int employeeId;
   final String name;
   final String position;
-  final double salary;
+  final Double salary;
   final DateTime hireDate;
   final String phone;
   final String email;
-  final int role;
+  final int role = 1;
   final String password;
 
   Employee({
@@ -19,7 +20,6 @@ class Employee {
     required this.hireDate,
     required this.phone,
     required this.email,
-    required this.role,
     required this.password,
   });
 
@@ -33,7 +33,6 @@ class Employee {
       hireDate: DateTime.parse(json['hire_date']), // Parses the date string into DateTime
       phone: json['phone'],
       email: json['email'],
-      role: json['role'],
       password: json['password'],
     );
   }

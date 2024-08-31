@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:small_res/screens/home_screen.dart';
 import 'package:small_res/screens/login_screen.dart';
 
 class Res extends StatefulWidget {
@@ -15,7 +16,7 @@ class _ResState extends State<Res> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = const LoginScreen();
+    Widget screenWidget = const HomeScreen();
 
     return screenWidget;
   }

@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:small_res/screens/home_screen.dart';
+import 'package:small_res/screens/register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,6 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
           'Content-Type': 'application/json',
         },
         body: json.encode({
+          
           'email': email,
           'password': password,
         }),
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> registerScreen() {
     return Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const RegisterScreen()),
     ); //
   }
 
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      fillColor:const Color.fromARGB(255, 255, 255, 255),
+                      fillColor: const Color.fromARGB(255, 255, 255, 255),
                       filled: true,
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: const TextStyle(height: 2.4, color: Colors.black),
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      fillColor:const Color.fromARGB(255, 255, 255, 255),
+                      fillColor: const Color.fromARGB(255, 255, 255, 255),
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -204,19 +204,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       elevation: WidgetStateProperty.all(5),
                     ),
-                    child: const Text('Elevated Button'),
+                    child: const Text('Sign In'),
                   )
                 ],
               ),
             ),
             const SizedBox(
-              height: 15,
+              height: 25,
             ),
-            TextButton(
-                onPressed: () {
-                  registerScreen();
-                },
-                child: const Text("Not a member? Register now")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Not a member?"),
+                TextButton(
+                    onPressed: () {
+                      registerScreen();
+                    },
+                    child: const Text(" Register now")),
+              ],
+            ),
           ],
         ),
       ),
