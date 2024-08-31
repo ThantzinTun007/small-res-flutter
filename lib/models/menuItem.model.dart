@@ -21,7 +21,9 @@ class MenuItem {
       menuItemId: json['menu_item_id'],
       name: json['name'],
       description: json['description'],
-      price: json['price'].toDouble(), // Ensure price is converted to double
+      price: json['price'] is double
+          ? json['price']
+          : double.parse(json['price'].toString()), // Convert price to double
       category: json['category'],
       imageUrl: json['image_url'],
     );

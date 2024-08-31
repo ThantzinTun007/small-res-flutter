@@ -14,7 +14,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        title: Row(
+          children: [
+            Image.asset(
+              'assets/icon.png',
+              scale: 14,
+            ),
+            const SizedBox(
+              width: 8,
+            ),
+            const Text(
+              'RESTAURANT',
+              style: TextStyle(fontWeight: FontWeight.w900, fontSize: 25),
+            )
+          ],
+        ),
       ),
       body: const Center(
         child: Text('Home screen'),
