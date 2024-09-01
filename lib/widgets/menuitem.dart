@@ -18,9 +18,9 @@ class MenuItems extends StatelessWidget {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
-            childAspectRatio: 9 / 14),
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: 10 / 14),
         itemCount: menuItem.data!.length,
         itemBuilder: (context, index) {
           return Material(
@@ -53,27 +53,56 @@ class MenuItems extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 9),
+                                vertical: 3, horizontal: 8),
                             child: Text(
                               menuItem.data![index].category.toUpperCase(),
                               style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
                                   fontSize: 12),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          width: 8,
+                          width: 5,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 3, horizontal: 8),
+                            child: Text(
+                              menuItem.data![index].category == 'appetizer' ||
+                                      menuItem.data![index].category ==
+                                          'main dish'
+                                  ? "🌶️ Spicy"
+                                  : "🧂 Suger",
+                              style: const TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 12),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -81,52 +110,46 @@ class MenuItems extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            menuItem.data![index].name,
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
+                        child: Text(
+                          menuItem.data![index].name,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              menuItem.data![index].price.toString(),
-                              style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromARGB(255, 63, 145, 221),
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              menuItem.data![index].price.toString(),
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey.shade500,
-                                  fontWeight: FontWeight.w700,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(CupertinoIcons.add_circled_solid),
-                        ),
-                      ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                menuItem.data![index].price.toString(),
+                                style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Color.fromARGB(255, 63, 145, 221),
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(CupertinoIcons.add_circled_solid),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
