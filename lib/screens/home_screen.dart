@@ -5,7 +5,6 @@ import 'package:small_res/models/menuItem.model.dart';
 import 'package:small_res/screens/login_screen.dart';
 import 'package:small_res/widgets/menuitem.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -64,28 +63,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: FutureBuilder<List<MenuItem>>(
-        future: getMenuItem,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(
-              body: Center(child: CircularProgressIndicator()),
-            );
-          } else if (snapshot.hasError) {
-            return Scaffold(
-              body: Center(child: Text('Error: ${snapshot.error}')),
-            );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Scaffold(
-              body: Center(child: Text('No data found')),
-            );
-          } else if (snapshot.hasData) {
-            return MenuItems(menuItem: snapshot);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        }),
+          future: getMenuItem,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            } else if (snapshot.hasError) {
+              return Scaffold(
+                body: Center(child: Text('Error: ${snapshot.error}')),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Scaffold(
+                body: Center(child: Text('No data found')),
+              );
+            } else if (snapshot.hasData) {
+              return MenuItems(menuItem: snapshot);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 }
