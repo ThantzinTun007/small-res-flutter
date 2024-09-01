@@ -52,13 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(CupertinoIcons.cart),
+            icon:const Icon(CupertinoIcons.cart),
           ),
           IconButton(
             onPressed: () {
               signOut();
             },
-            icon: Icon(CupertinoIcons.arrow_right_to_line),
+            icon: const Icon(CupertinoIcons.arrow_right_to_line),
           ),
         ],
       ),

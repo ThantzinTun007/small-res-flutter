@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:small_res/screens/home_screen.dart';
 import 'package:small_res/screens/login_screen.dart';
+import 'package:small_res/screens/menuitems_details.dart';
 
 class Res extends StatefulWidget {
   const Res({super.key});

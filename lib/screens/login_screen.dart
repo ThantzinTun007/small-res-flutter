@@ -36,7 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
           'Content-Type': 'application/json',
         },
         body: json.encode({
-          
           'email': email,
           'password': password,
         }),
@@ -204,7 +203,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       elevation: WidgetStateProperty.all(5),
                     ),
-                    child: const Text('Sign In'),
+                    child: const Text(
+                      'Sign In',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                   )
                 ],
               ),
