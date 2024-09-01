@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:small_res/api/api.dart';
 import 'package:small_res/models/menuItem.model.dart';
 import 'package:small_res/screens/login_screen.dart';
+import 'package:small_res/screens/order_screen.dart';
 import 'package:small_res/widgets/menuitem.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -51,8 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon:const Icon(CupertinoIcons.cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const OrderScreen()),
+              );
+            },
+            icon: const Icon(CupertinoIcons.cart),
           ),
           IconButton(
             onPressed: () {
