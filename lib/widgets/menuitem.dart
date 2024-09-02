@@ -7,9 +7,11 @@ class MenuItems extends StatelessWidget {
   const MenuItems({
     super.key,
     required this.menuItem,
+    required this.addMenuItem
   });
 
   final AsyncSnapshot<List<MenuItem>> menuItem;
+  final void Function(MenuItem menuitem) addMenuItem;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +128,8 @@ class MenuItems extends StatelessWidget {
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -145,7 +148,7 @@ class MenuItems extends StatelessWidget {
                             ],
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {addMenuItem(menuItem.data![index]);},
                             icon: const Icon(CupertinoIcons.add_circled_solid),
                           ),
                         ],

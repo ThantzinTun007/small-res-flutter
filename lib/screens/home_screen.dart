@@ -5,6 +5,7 @@ import 'package:small_res/models/menuItem.model.dart';
 import 'package:small_res/screens/login_screen.dart';
 import 'package:small_res/screens/order_screen.dart';
 import 'package:small_res/widgets/menuitem.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,12 +18,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<MenuItem>> getMenuItem;
+  final List<MenuItem> orderItems = [];
 
   Future<void> signOut() {
     return Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
+  }
+
+  void addOrderItem(MenuItem menuitem) {
+    setState(() {
+      orderItems.add(menuitem);
+      Fluttertoast.showToast(msg: 'Add ${menuitem.name}',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black54,
+      textColor: Colors.white,
+      fontSize: 16.0,);
+    });
   }
 
   @override
@@ -55,7 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const OrderScreen()),
+                MaterialPageRoute(
+                    builder: (context) => OrderScreen(
+                          orderItems: orderItems,
+                        )),
               );
             },
             icon: const Icon(CupertinoIcons.cart),
@@ -84,7 +102,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 body: Center(child: Text('No data found')),
               );
             } else if (snapshot.hasData) {
-              return MenuItems(menuItem: snapshot);
+              return MenuItems(
+                menuItem: snapshot,
+                addMenuItem: addOrderItem,
+              );
             } else {
               return const Center(
                 child: CircularProgressIndicator(),
