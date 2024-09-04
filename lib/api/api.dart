@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:small_res/models/employee.model.dart';
 import 'package:small_res/models/menuItem.model.dart';
 import 'package:http/http.dart' as http;
+import 'package:small_res/models/tables.dart';
 
 class Api {
   static const apiUrl = 'http://localhost:8080/api/res';
@@ -62,6 +63,17 @@ class Api {
           .toList();
     } else {
       throw Exception('Error in Employee!');
+    }
+  }
+
+  Future<List<TableModel>> fetchTables() async {
+    final response = await http.get(Uri.parse('$apiUrl/findAllTables'));
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((json) => TableModel.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load tables');
     }
   }
 }

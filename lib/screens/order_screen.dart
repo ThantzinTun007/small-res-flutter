@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:small_res/models/menuItem.model.dart';
+import 'package:small_res/models/orderItem.dart';
+import 'package:small_res/models/tables.dart';
 import 'package:small_res/widgets/order_items.dart';
 import 'package:small_res/widgets/orders.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen(
-      {super.key, required this.orderItems, required this.deleteOrderItem});
+      {super.key,
+      required this.orderItems,
+      required this.deleteOrderItem,
+      required this.tables});
 
   final List<MenuItem> orderItems;
   final void Function(MenuItem menuitem) deleteOrderItem;
+  final TableModel tables;
 
   @override
   State<OrderScreen> createState() {
@@ -33,19 +39,16 @@ class _OrderScreenState extends State<OrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = OrderItems();
-
-    var activePageTitle = 'Your Order Items';
+    Widget activePage = OrderItems(
+      tables: widget.tables,
+      orderItem: widget.orderItems,
+    );
 
     if (_selectedPageIndex == 1) {
       activePage = Orders();
-      activePageTitle = 'Finished Orders';
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(activePageTitle),
-      ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,

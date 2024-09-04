@@ -17,7 +17,7 @@ class _ResState extends State<Res> {
 
   @override
   Widget build(BuildContext context) {
-    Widget screenWidget = const LoginScreen();
+    Widget screenWidget = const HomeScreen();
 
     return screenWidget;
   }
