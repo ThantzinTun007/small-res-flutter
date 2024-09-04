@@ -30,13 +30,30 @@ class _HomeScreenState extends State<HomeScreen> {
   void addOrderItem(MenuItem menuitem) {
     setState(() {
       orderItems.add(menuitem);
-      Fluttertoast.showToast(msg: 'Add ${menuitem.name}',
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black54,
-      textColor: Colors.white,
-      fontSize: 16.0,);
+      Fluttertoast.showToast(
+        msg: 'Added ${menuitem.name}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black54,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    });
+  }
+
+  void deleteOrderItem(MenuItem menuitem) {
+    setState(() {
+      orderItems.remove(menuitem);
+      Fluttertoast.showToast(
+        msg: 'Deleted ${menuitem.name}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     });
   }
 
@@ -50,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             Image.asset(
@@ -73,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(
                     builder: (context) => OrderScreen(
                           orderItems: orderItems,
+                          deleteOrderItem: deleteOrderItem,
                         )),
               );
             },

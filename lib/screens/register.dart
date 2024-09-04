@@ -26,7 +26,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void register() async {
     if (!_formKey.currentState!.validate()) {
       // If the form is not valid, show a Snackbar with the error.
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Please fix the errors in the form.'),
       ));
       return;

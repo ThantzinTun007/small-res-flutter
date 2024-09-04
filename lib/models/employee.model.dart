@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:ffi';
+// import 'dart:ffi';
 
 class Employee {
   final int employeeId;
   final String name;
   final String position;
-  final Double salary;
+  final double salary;
   final DateTime hireDate;
   final String phone;
   final String email;
