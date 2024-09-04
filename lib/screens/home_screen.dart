@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:small_res/api/api.dart';
 import 'package:small_res/models/menuItem.model.dart';
 import 'package:small_res/models/tables.dart';
-import 'package:small_res/screens/login_screen.dart';
 import 'package:small_res/screens/menuitems_screen.dart';
-import 'package:small_res/screens/order_screen.dart';
-import 'package:small_res/widgets/menuitem.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -48,21 +45,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tables'),
+        title: const Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Choose Table',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
       ),
       body: FutureBuilder<List<TableModel>>(
         future: getTables,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No tables found.'));
+            return const Center(child: Text('No tables found.'));
           } else {
             final tables = snapshot.data!;
             return GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, // Number of columns in the grid
                 crossAxisSpacing: 10.0, // Spacing between columns
                 mainAxisSpacing: 10.0, // Spacing between rows
@@ -90,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'Table ${table.tableNumber}',
-                          style: TextStyle(
+                          style:const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8.0),

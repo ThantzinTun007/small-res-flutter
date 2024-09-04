@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:small_res/models/employee.model.dart';
 import 'package:small_res/models/menuItem.model.dart';
 import 'package:http/http.dart' as http;
+import 'package:small_res/models/order.dart';
+import 'package:small_res/models/orderItem.dart';
 import 'package:small_res/models/tables.dart';
 
 class Api {
@@ -74,6 +76,34 @@ class Api {
       return data.map((json) => TableModel.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load tables');
+    }
+  }
+
+
+  Future<int> createOrder(Order order) async {
+    final response = await http.post(
+      Uri.parse('$apiUrl/addOrders'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(order.toJson()),
+    );
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      return jsonDecode(response.body)['order_id'];
+    } else {
+      throw Exception('Failed to create order');
+    }
+  }
+
+  // Function to create an order item
+  Future<void> createOrderItem(OrderItem orderItem) async {
+    final response = await http.post(
+      Uri.parse('$apiUrl/orderitems'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(orderItem.toJson()),
+    );
+
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      throw Exception('Failed to create order item');
     }
   }
 }

@@ -4,9 +4,14 @@ import 'package:small_res/models/orderItem.dart';
 import 'package:small_res/models/tables.dart';
 
 class OrderItems extends StatelessWidget {
-  const OrderItems({super.key, required this.tables, required this.orderItem});
+  const OrderItems(
+      {super.key,
+      required this.tables,
+      required this.orderItem,
+      required this.addOrder});
   final List<MenuItem> orderItem;
   final TableModel tables;
+  final Function(List<OrderItem> orderItem) addOrder;
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +50,36 @@ class OrderItems extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title:  Text('Table No. ${tables.tableNumber}'),
+        title: Text('Table No. ${tables.tableNumber}'),
       ),
-      body: ListView.builder(
-        itemCount: orderItems.length,
-        itemBuilder: (context, index) {
-          final orderitem = orderItems[index];
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: orderItems.length,
+                itemBuilder: (context, index) {
+                  final orderitem = orderItems[index];
 
-          return ListTile(
-              title: Text(menuItem!.name),
-              trailing: Text('${orderitem.quantity} ${orderitem.price}'));
-        },
+                  return ListTile(
+                      title: Text(menuItem!.name),
+                      trailing:
+                          Text('${orderitem.quantity} ${orderitem.price}'));
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () async {
+                await addOrder(orderItems);
+              },
+              child: const Text('Submit Order'),
+            ),
+            const SizedBox(height: 20),
+            const Text('Total Amount:'),
+          ],
+        ),
       ),
     );
   }
